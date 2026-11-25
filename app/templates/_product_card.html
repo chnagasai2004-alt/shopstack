@@ -1,0 +1,5 @@
+<article class="product-card">
+  <a class="product-image" href="/products/{{ product.slug }}"><img src="{{ product.image_url }}" alt="{{ product.name }}" loading="lazy">{% if product.compare_at_cents %}<span class="product-badge">Save {{ ((1 - product.price_cents / product.compare_at_cents) * 100)|round|int }}%</span>{% endif %}<span class="quick-view">View ↗</span></a>
+  <div class="product-info"><div><a class="product-name" href="/products/{{ product.slug }}">{{ product.name }}</a><p class="product-category">{{ product.category.name if product.category else '' }}</p></div><div class="product-price"><strong>{{ money(product.price_cents) }}</strong>{% if product.compare_at_cents %}<del>{{ money(product.compare_at_cents) }}</del>{% endif %}</div></div>
+  <form class="add-form js-add-cart" action="/api/cart" method="post"><input type="hidden" name="product_id" value="{{ product.id }}"><input type="hidden" name="quantity" value="1"><button type="submit">Add to bag <span>＋</span></button></form>
+</article>

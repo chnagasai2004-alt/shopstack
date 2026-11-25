@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Shopstack — considered goods for everyday life{% endblock %}</title>
+  <meta name="description" content="Shopstack is a thoughtful, full-stack ecommerce demo for everyday objects.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+</head>
+<body>
+  <div class="announcement">Free shipping on orders over $75 <span>·</span> Designed for the everyday</div>
+  <header class="site-header">
+    <a class="wordmark" href="/">shop<span>stack</span></a>
+    <form class="search" action="/shop" method="get">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+      <input type="search" name="q" placeholder="Search for something good" value="{{ request.query_params.get('q', '') }}">
+    </form>
+    <nav class="main-nav">
+      <a href="/shop">Shop</a>
+      {% if user %}<a href="/wishlist">Saved</a>{% endif %}
+      {% if user and user.is_admin %}<a href="/admin">Admin</a>{% endif %}
+      {% if user %}
+        <a href="/account/orders">Orders</a>
+        <form action="/logout" method="post" class="inline-form"><button class="nav-button" type="submit">Log out</button></form>
+      {% else %}
+        <a href="/login">Log in</a>
+      {% endif %}
+      <a class="bag-link" href="/cart" aria-label="Shopping bag"><span>Bag</span><b id="cart-count">{{ cart_count }}</b></a>
+    </nav>
+    <button class="mobile-menu" aria-label="Open menu">☰</button>
+  </header>
+  <main>{% block content %}{% endblock %}</main>
+  <footer class="site-footer">
+    <div class="footer-main">
+      <div><a class="wordmark light" href="/">shop<span>stack</span></a><p>Good things, thoughtfully chosen.<br>Made for the everyday.</p></div>
+      <div><h4>Explore</h4><a href="/shop">All products</a><a href="/shop?sort=newest">New arrivals</a><a href="/shop?sort=featured">Best sellers</a></div>
+      <div><h4>Help</h4><a href="/account/orders">Track an order</a><a href="/cart">Shipping & returns</a><a href="mailto:hello@example.com">Contact us</a></div>
+      <div><h4>Stay in the loop</h4><p class="small-copy">Occasional notes on objects worth keeping.</p><form class="footer-subscribe"><input type="email" placeholder="Your email" aria-label="Email address"><button type="button">→</button></form></div>
+    </div>
+    <div class="footer-bottom"><span>© 2025 Shopstack</span><span>Demo store · Payments simulated locally</span></div>
+  </footer>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="{{ url_for('static', path='js/app.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

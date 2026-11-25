@@ -1,0 +1,3 @@
+{% extends "base.html" %}
+{% block title %}Saved items — Shopstack{% endblock %}
+{% block content %}<section class="page-intro compact"><p class="eyebrow">Your collection</p><h1>Saved <em>for later.</em></h1><p>Keep the good finds close.</p></section><section class="section wishlist-section">{% if items %}<div class="product-grid">{% for saved in items %}{% set product = saved.product %}{% include '_product_card.html' %}{% endfor %}</div>{% else %}<div class="empty-state"><span>♡</span><h2>Nothing saved yet.</h2><p>Tap the heart on something you like and it will live here.</p><a class="button button-dark" href="/shop">Explore products ↗</a></div>{% endif %}</section>{% endblock %}
